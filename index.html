@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRETTEA - Not Just Pretty, It's Prettea!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);            
+        }
+        body.modal-open {
+    overflow: hidden !important;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d5016;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2d5016;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #7cb342;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #2d5016;
+            transition: color 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            color: #7cb342;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: #2d5016;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Page System */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f5dc 0%, #e8f5e8 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-logo {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-fallback {
+            display: none;
+            width: 200px;
+            height: 200px;
+            background: #7cb342;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #2d5016;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5a5a5a;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #7cb342, #5a9216);
+            color: white;
+            box-shadow: 0 5px 15px rgba(124, 179, 66, 0.3);
+        }
+
+        .cta-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #2d5016;
+            border: 2px solid #7cb342;
+        }
+
+        .cta-btn.secondary:hover {
+            background: #7cb342;
+            color: white;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #e8f5e8 0%, #b8e6b8 100%);
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #2d5016;
+            margin-bottom: 3rem;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            line-height: 1.8;
+        }
+
+        .decorative-shapes {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .shape {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .shape:nth-child(1) { background: #ff6b6b; }
+        .shape:nth-child(2) { background: #4ecdc4; }
+        .shape:nth-child(3) { background: #ff8e53; }
+        .shape:nth-child(4) { background: #95e1d3; }
+        .shape:nth-child(5) { background: #a8e6cf; }
+
+        /* Menu Section */
+        .menu {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #b8e6b8 0%, #80c783 100%);
+        }
+
+        .menu h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2d5016;
+            margin-bottom: 3rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .drink-image {
+            width: 100px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .drink-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover .drink-image img {
+            transform: scale(1.1);
+        }
+
+        .drink-icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            border-radius: 15px;
+        }
+
+        .drink-icon.red { background: linear-gradient(135deg, #ff6b6b, #ee5a52); }
+        .drink-icon.blue { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .drink-icon.orange { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+        .drink-icon.green { background: linear-gradient(135deg, #55a3ff, #74b9ff); }
+        .drink-icon.pink { background: linear-gradient(135deg, #fd79a8, #e84393); }
+
+        .menu-item h3 {
+            color: #2d5016;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            color: #7cb342;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .sugar-options {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .sugar-option {
+            padding: 0.4rem 0.8rem;
+            border: 2px solid #7cb342;
+            background: transparent;
+            color: #7cb342;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .sugar-option.active,
+        .sugar-option:hover {
+            background: #7cb342;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .qty-btn {
+            background: #7cb342;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #5a9216;
+            transform: scale(1.1);
+        }
+
+        .qty-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            width: 100%;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #ee5a52, #dc4f47);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Cart Section */
+        .cart-page {
+            padding: 120px 5% 50px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            color: #2d5016;
+            margin-bottom: 1rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: #f8f9fa;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            margin-right: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #2d5016;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-options {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #7cb342;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .remove-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #ee5a52;
+            transform: scale(1.1);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .summary-row.total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+            color: #2d5016;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #7cb342, #5a9216);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+        }
+
+        /* Order History Page */
+        .orders-page {
+            padding: 120px 5% 50px;
+            background: linear-gradient(135deg, #e8f5e8 0%, #b8e6b8 100%);
+            min-height: 100vh;
+        }
+
+        .orders-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Ingredients Section */
+        .ingredients-section {
+            padding: 100px 5%;
+            background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+        }
+
+        .ingredients-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ingredients-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .ingredients-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .ingredient-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ingredient-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .ingredient-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .ingredient-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .ingredient-card:hover .ingredient-image img {
+            transform: scale(1.1);
+        }
+
+        .ingredient-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #7cb342, #5a9216);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .ingredient-content h3 {
+            color: #2d5016;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .ingredient-content p {
+            color: #4a4a4a;
+            line-height: 1.7;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+
+        /* Animation for ingredients */
+        .ingredient-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .ingredient-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-page {
+            padding: 120px 5% 50px;
+            background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+            min-height: 100vh;
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #7cb342;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
+            padding: 50px 5%;
+            color: white;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+            cursor: pointer;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .teapot {
+                width: 90px;
+                height: 75px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .item-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Button Ripple Effect */
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="showPage('home')">PRETTEA</div>
+        <ul class="nav-links">
+            <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
+            <li><a onclick="showPage('menu')" class="nav-link">Menu</a></li>
+            <li><a onclick="showPage('orders')" class="nav-link">My Orders</a></li>
+            <li><a onclick="showPage('contact')" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="cart-icon" onclick="showPage('cart')">
+            🛒
+            <span class="cart-badge" id="cartBadge">0</span>
+        </div>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <div id="homePage" class="page active">
+        <section class="hero">
+            <div class="hero-logo">
+                <img src="logo.png" alt="PRETTEA Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-fallback">
+                    <div class="teapot">
+                        <div class="leaf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <button class="cta-btn primary" onclick="showPage('menu')">🍵 Order Now</button>
+                <button class="cta-btn secondary" onclick="scrollToSection('about')">📖 Learn More</button>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <p>Di setiap tegukan, Anda akan merasakan keseimbangan antara rasa teh yang berkualitas dan kesegaran buah—sebuah pengalaman yang tidak hanya memanjakan lidah, namun berkesan. Dari sensasi buah segar hingga aroma hangat yang menenangkan, Prettea menghadirkan pengalaman minuman yang tak terlupakan.</p>
+                <br>
+                <p>Lebih dari sekedar minuman, kami adalah bagian dari gaya hidup—hidup yang penuh kehangatan dan menciptakan kebersamaan dalam hal-hal sederhana yang indah.</p>
+            </div>
+
+            <div class="decorative-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+        </section>
+
+        <section class="menu">
+            <h2>Our Popular Menu</h2>
+            <div class="menu-grid" id="homeMenuGrid">
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="cta-btn primary" onclick="showPage('menu')">🍽️ View Full Menu</button>
+            </div>
+        </section>
+
+        <section class="ingredients-section">
+            <div class="ingredients-container">
+                <h2>Ingredient</h2>
+                <div class="ingredients-grid">
+                    <div class="ingredient-card">
+                        <div class="ingredient-image">
+                            <img src="ing2.jpeg" alt="Teh" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="ingredient-placeholder">🍃</div>
+                        </div>
+                        <div class="ingredient-content">
+                            <h3>Teh</h3>
+                            <p>Daun tanaman Camellia sinensis yang kaya akan antioksidan. Teh membantu meningkatkan konsentrasi, menenangkan pikiran, dan mendukung kesehatan jantung.</p>
+                        </div>
+                    </div>
+
+                    <div class="ingredient-card">
+                        <div class="ingredient-image">
+                            <img src="ing4.jpeg" alt="Buah" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="ingredient-placeholder">🍓</div>
+                        </div>
+                        <div class="ingredient-content">
+                            <h3>Buah</h3>
+                            <p>Stroberi, kismis hitam (blackcurrant), persik, leci dan mangga adalah buah-buahan segar yang kaya akan vitamin dan antioksidan. Memberikan rasa manis-asam yang menyegarkan serta mendukung daya tahan tubuh.</p>
+                        </div>
+                    </div>
+
+                    <div class="ingredient-card">
+                        <div class="ingredient-image">
+                            <img src="ing1.jpeg" alt="Bunga Telang" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="ingredient-placeholder">🌸</div>
+                        </div>
+                        <div class="ingredient-content">
+                            <h3>Bunga Telang</h3>
+                            <p>Bunga berwarna biru keunguan yang kaya antioksidan. Telang dikenal bermanfaat untuk kesehatan mata, meningkat radikal bebas, dan memberikan warna alami yang menarik pada minuman.</p>
+                        </div>
+                    </div>
+
+                    <div class="ingredient-card">
+                        <div class="ingredient-image">
+                            <img src="ing3.jpeg" alt="Sirup Beri dan Leci" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="ingredient-placeholder">🍯</div>
+                        </div>
+                        <div class="ingredient-content">
+                            <h3>Sirup Beri dan Leci</h3>
+                            <p>Sirup buah dengan rasa manis yang khas. Beri memberikan sentuhan asam segar, sementara leci menghadirkan aroma manis yang lembut, cocok untuk memperkaya cita rasa minuman.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="menuPage" class="page">
+        <section class="menu" style="padding-top: 120px;">
+            <h2>Our Complete Menu</h2>
+            <div class="menu-grid" id="fullMenuGrid">
+            </div>
+        </section>
+    </div>
+
+    <div id="cartPage" class="page">
+        <div class="cart-page">
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h1>🛒 Your Cart</h1>
+                    <p>Review your items before checkout</p>
+                </div>
+                
+                <div class="cart-items" id="cartItems">
+                </div>
+
+                <div class="cart-summary" id="cartSummary" style="display: none;">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">Rp 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span id="cartDeliveryFee">Rp 5,000</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (10%):</span>
+                        <span id="cartTax">Rp 0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cartTotal">Rp 0</span>
+                    </div>
+                    <button class="checkout-btn" onclick="proceedToCheckout()">
+                        💳 Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Page -->
+    <div id="ordersPage" class="page">
+        <div class="orders-page">
+            <div class="orders-container">
+                <div class="cart-header">
+                    <h1>📋 My Orders</h1>
+                    <p>Track your order history</p>
+                </div>
+                
+                <div id="ordersList">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contactPage" class="page">
+        <div class="contact-page">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h1 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">📞 Contact Us</h1>
+                <p style="color: rgba(255,255,255,0.9);">We'd love to hear from you!</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>📍 Get in Touch</h3>
+                    <div style="margin: 2rem 0;">
+                        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 1.5rem;">📱</span>
+                            <div>
+                                <strong>WhatsApp</strong><br>
+                                <span style="color: #666;">+62 812-8348-1413</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 1.5rem;">📧</span>
+                            <div>
+                                <strong>Email</strong><br>
+                                <span style="color: #666;">hello@prettea.com</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 1.5rem;">📍</span>
+                            <div>
+                                <strong>Address</strong><br>
+                                <span style="color: #666;">Jl. Letjen S. Parman St No. 1, RT.6 / RW. 16, Grogol, Grogol Petamburan, West Jakarta City, Jakarta 11440</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-size: 1.5rem;">🕒</span>
+                            <div>
+                                <strong>Operating Hours</strong><br>
+                                <span style="color: #666;">Mon-Sun: 08:00 - 22:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem;">Follow Us</h4>
+                        <div class="social-links">
+                            <a href="#" style="background: #4267B2;">📘</a>
+                            <a href="#" style="background: #E4405F;">📷</a>
+                            <a href="#" style="background: #1DA1F2;">🐦</a>
+                            <a href="#" style="background: #25D366;">💬</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>💌 Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Full Name *</label>
+                            <input type="text" id="contactName" required placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email *</label>
+                            <input type="email" id="contactEmail" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Phone Number</label>
+                            <input type="tel" id="contactPhone" placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject *</label>
+                            <input type="text" id="contactSubject" required placeholder="What can we help you with?">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea id="contactMessage" required rows="5" placeholder="Tell us more about your inquiry..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-btn primary" style="width: 100%;">
+                            📤 Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PRETTEA</h3>
+                <p>"Not just pretty, it's Prettea!"</p>
+                <p>Bringing you the perfect blend of taste and beauty in every cup.</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">📷</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a onclick="showPage('home')">Home</a></p>
+                <p><a onclick="showPage('menu')">Menu</a></p>
+                <p><a onclick="showPage('orders')">My Orders</a></p>
+                <p><a onclick="showPage('contact')">Contact</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p>🏪 Pickup Service</p>
+                <p>🛵 Delivery Service</p>
+                <p>🎉 Event Catering</p>
+                <p>💳 Multiple Payment Options</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📱 +62 812-8348-1413</p>
+                <p>📧 hello@prettea.com</p>
+                <p>📍 Jl. Tea Garden No. 123</p>
+                <p>Pasuruan, East Java</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2025 PRETTEA. All rights reserved. Made with ❤️ for tea lovers.</p>
+        </div>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('prettea_cart')) || [];
+        let orders = JSON.parse(localStorage.getItem('prettea_orders')) || [];
+        let currentPage = 'home';
+
+        const menuItems = [
+            {
+                id: 1,
+                name: "Midnight Berry Tea",
+                price: 27000,
+                image: "https://ik.imagekit.io/f6rv312me/IMG_2457.JPG?updatedAt=1748787045090",
+                color: "red",
+                description: "Rich berry blend with deep flavor and natural antioxidants",
+                category: "fruit"
+            },
+            {
+                id: 2,
+                name: "Butterfly Peach Tea",
+                price: 27000,
+                image: "https://ik.imagekit.io/f6rv312me/IMG_2461.JPG?updatedAt=1748787110777",
+                color: "blue",
+                description: "Magical color-changing tea with sweet peach flavor",
+                category: "classic"
+            },
+            {
+                id: 3,
+                name: "English Mango Tea",
+                price: 28000,
+                image: "https://ik.imagekit.io/f6rv312me/IMG_2459.JPG?updatedAt=1748787110753",
+                color: "orange",
+                description: "Premium English tea infused with fresh mango essence",
+                category: "fruit"
+            },
+            {
+                id: 4,
+                name: "Darling Lychee Tea",
+                price: 26000,
+                image: "https://ik.imagekit.io/f6rv312me/IMG_2460.JPG?updatedAt=1748787110845",
+                color: "green",
+                description: "Sweet lychee with green tea base and mint garnish",
+                category: "fruit"
+            },
+            {
+                id: 5,
+                name: "Strawberry Jasmine Tea",
+                price: 28000,
+                image: "https://ik.imagekit.io/f6rv312me/IMG_2458.JPG?updatedAt=1748787110727",
+                color: "pink",
+                description: "Aromatic jasmine with fresh strawberry and mint",
+                category: "premium"
+            }
+        ];
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            document.getElementById(pageName + 'Page').classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.querySelector(`[onclick="showPage('${pageName}')"]`).classList.add('active');
+
+            currentPage = pageName;
+
+            switch(pageName) {
+                case 'home':
+                    loadHomeMenu();
+                    break;
+                case 'menu':
+                    loadFullMenu();
+                    break;
+                case 'cart':
+                    loadCart();
+                    break;
+                case 'orders':
+                    loadOrders();
+                    break;
+            }
+
+            document.querySelector('.nav-links').classList.remove('active');
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function createMenuItemHTML(item, isFullMenu = false) {
+            return `
+                <div class="menu-item fade-in-up">
+                    <div class="drink-image">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="drink-icon ${item.color}">🍹</div>
+                    </div>
+                    <h3>${item.name}</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${item.description}</p>
+                    <div class="price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                    <div class="sugar-options">
+                        <button class="sugar-option active" data-sugar="normal">Normal Sugar</button>
+                        <button class="sugar-option" data-sugar="less">Less Sugar</button>
+                        <button class="sugar-option" data-sugar="extra">Extra Sugar</button>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="qty-btn minus" onclick="changeQuantity(this, -1)">-</button>
+                        <span class="qty-display">1</span>
+                        <button class="qty-btn plus" onclick="changeQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(${item.id})">
+                        🛒 Add to Cart
+                    </button>
+                </div>
+            `;
+        }
+
+        function loadHomeMenu() {
+            const homeMenuGrid = document.getElementById('homeMenuGrid');
+            const popularItems = menuItems.slice(0, 4);
+            homeMenuGrid.innerHTML = popularItems.map(item => createMenuItemHTML(item)).join('');
+            setupMenuInteractions();
+            
+            setTimeout(() => {
+                animateIngredientsSection();
+            }, 500);
+        }
+
+        function animateIngredientsSection() {
+            const ingredientCards = document.querySelectorAll('.ingredient-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, index * 150); 
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            ingredientCards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        function loadFullMenu() {
+            const fullMenuGrid = document.getElementById('fullMenuGrid');
+            fullMenuGrid.innerHTML = menuItems.map(item => createMenuItemHTML(item, true)).join('');
+            setupMenuInteractions();
+        }
+
+        function setupMenuInteractions() {
+            document.querySelectorAll('.sugar-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const container = this.closest('.menu-item');
+                    container.querySelectorAll('.sugar-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        function changeQuantity(btn, change) {
+            const container = btn.closest('.menu-item') || btn.closest('.cart-item');
+            const display = container.querySelector('.qty-display');
+            let currentQty = parseInt(display.textContent);
+            
+            currentQty = Math.max(1, Math.min(currentQty + change, 10));
+            display.textContent = currentQty;
+
+            if (container.classList.contains('cart-item')) {
+                const itemId = parseInt(container.dataset.itemId);
+                updateCartItemQuantity(itemId, currentQty);
+            }
+        }
+
+        function addToCart(itemId) {
+            const menuItem = document.querySelector(`[onclick="addToCart(${itemId})"]`).closest('.menu-item');
+            const item = menuItems.find(i => i.id === itemId);
+            const quantity = parseInt(menuItem.querySelector('.qty-display').textContent);
+            const sugar = menuItem.querySelector('.sugar-option.active').dataset.sugar;
+
+            const cartItem = {
+                id: itemId,
+                name: item.name,
+                price: item.price,
+                image: item.image,
+                color: item.color,
+                quantity: quantity,
+                sugar: sugar,
+                timestamp: Date.now()
+            };
+
+            const existingItemIndex = cart.findIndex(cartItem => 
+                cartItem.id === itemId && cartItem.sugar === sugar
+            );
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                cart.push(cartItem);
+            }
+
+            saveCart();
+            updateCartBadge();
+            showNotification(`${item.name} added to cart! 🎉`);
+
+            menuItem.querySelector('.qty-display').textContent = '1';
+        }
+
+        function loadCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some delicious drinks to get started!</p>
+                        <button class="cta-btn primary" onclick="showPage('menu')" style="margin-top: 2rem;">
+                            🍵 Browse Menu
+                        </button>
+                    </div>
+                `;
+                cartSummary.style.display = 'none';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item" data-item-id="${item.id}">
+                    <div class="item-image ${item.color}">${item.image}</div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-options">🍯 ${getSugarText(item.sugar)}</div>
+                    </div>
+                    <div class="item-controls">
+                        <div class="quantity-control">
+                            <button class="qty-btn minus" onclick="changeQuantity(this, -1)">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn plus" onclick="changeQuantity(this, 1)">+</button>
+                        </div>
+                        <div class="item-price">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id}, '${item.sugar}')" title="Remove item">
+                            ×
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            cartSummary.style.display = 'block';
+            updateCartSummary();
+        }
+
+        function updateCartSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = 5000;
+            const tax = Math.round((subtotal + deliveryFee) * 0.1);
+            const total = subtotal + deliveryFee + tax;
+
+            document.getElementById('cartSubtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('cartDeliveryFee').textContent = `Rp ${deliveryFee.toLocaleString('id-ID')}`;
+            document.getElementById('cartTax').textContent = `Rp ${tax.toLocaleString('id-ID')}`;
+            document.getElementById('cartTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function updateCartItemQuantity(itemId, newQuantity) {
+            const cartItemIndex = cart.findIndex(item => item.id === itemId);
+            if (cartItemIndex > -1) {
+                cart[cartItemIndex].quantity = newQuantity;
+                saveCart();
+                updateCartBadge();
+                updateCartSummary();
+                
+                const cartItemElement = document.querySelector(`[data-item-id="${itemId}"]`);
+                const priceElement = cartItemElement.querySelector('.item-price');
+                const item = cart[cartItemIndex];
+                priceElement.textContent = `Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+            }
+        }
+
+        function removeFromCart(itemId, sugar) {
+            cart = cart.filter(item => !(item.id === itemId && item.sugar === sugar));
+            saveCart();
+            updateCartBadge();
+            loadCart();
+            showNotification('Item removed from cart');
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            showPaymentMethodModal();
+        }
+
+        function showPaymentMethodModal() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const deliveryFee = 5000;
+    const tax = Math.round((subtotal + deliveryFee) * 0.1);
+    const total = subtotal + deliveryFee + tax;
+
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+        overflow-y: auto;
+        padding: 20px;
+    `;
+
+    modal.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #93D3AE 0%, #93D3AE 100%);
+            padding: 0;
+            border-radius: 25px;
+            max-width: 450px;
+            width: 100%;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+            margin: auto;
+        ">
+            <!-- Header -->
+            <div style="padding: 2rem 2rem 1rem; text-align: center; position: sticky; top: 0; background: linear-gradient(135deg, #93D3AE 0%, #93D3AE 100%); border-radius: 25px 25px 0 0; z-index: 10;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; flex-direction: column; flex: 1;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">1</div>
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Cart</span>
+                    </div>
+                    <div style="flex: 1; height: 2px; background: rgba(255,255,255,0.3); margin: 0 0.5rem;"></div>
+                    <div style="display: flex; align-items: center; flex-direction: column; flex: 1;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">2</div>
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Shipping</span>
+                    </div>
+                    <div style="flex: 1; height: 2px; background: #4CAF50; margin: 0 0.5rem;"></div>
+                    <div style="display: flex; align-items: center; flex-direction: column; flex: 1;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #4CAF50; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">3</div>
+                        <span style="font-size: 0.8rem; color: white; font-weight: bold;">Payment</span>
+                    </div>
+                    <div style="flex: 1; height: 2px; background: rgba(255,255,255,0.3); margin: 0 0.5rem;"></div>
+                    <div style="display: flex; align-items: center; flex-direction: column; flex: 1;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">4</div>
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Review</span>
+                    </div>
+                </div>
+                
+                <h2 style="color: white; margin-bottom: 0.5rem; font-size: 1.5rem;">Pilih Metode Pembayaran</h2>
+                <div style="width: 100px; height: 3px; background: #4CAF50; margin: 0 auto; border-radius: 2px;"></div>
+                
+                <!-- Close Button -->
+                <button onclick="closeModal(this)" style="
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                    color: white;
+                    backdrop-filter: blur(10px);
+                ">
+                    ×
+                </button>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div style="padding: 0 2rem 2rem;">
+                <!-- Payment Methods -->
+                <div class="payment-option" data-method="card" style="
+                    background: rgba(255,255,255,0.95);
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 1rem;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 2px solid transparent;
+                ">
+                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        💳
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="color: #2d5016; margin-bottom: 0.3rem; font-size: 1.1rem;">Kartu Kredit/Debit</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Bayar aman dengan kartu Anda</p>
+                    </div>
+                    <div class="payment-radio" style="width: 20px; height: 20px; border: 2px solid #ddd; border-radius: 50%; position: relative;">
+                        <div style="width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 3px; background: #4CAF50; margin-bottom: 1rem; border-radius: 2px;"></div>
+
+                <!-- Bank Transfer -->
+                <div class="payment-option" data-method="transfer" style="
+                    background: rgba(255,255,255,0.95);
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 1rem;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 2px solid transparent;
+                ">
+                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        🏦
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="color: #2d5016; margin-bottom: 0.3rem; font-size: 1.1rem;">Transfer Bank</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Bayar langsung dari rekening bank Anda</p>
+                    </div>
+                    <div class="payment-radio" style="width: 20px; height: 20px; border: 2px solid #ddd; border-radius: 50%; position: relative;">
+                        <div style="width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 3px; background: #4CAF50; margin-bottom: 1rem; border-radius: 2px;"></div>
+
+                <!-- E-Wallet -->
+                <div class="payment-option" data-method="ewallet" style="
+                    background: rgba(255,255,255,0.95);
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 1rem;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 2px solid transparent;
+                ">
+                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        📱
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="color: #2d5016; margin-bottom: 0.3rem; font-size: 1.1rem;">E-Wallet</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Dana, GoPay, OVO, dan lainnya</p>
+                    </div>
+                    <div class="payment-radio" style="width: 20px; height: 20px; border: 2px solid #ddd; border-radius: 50%; position: relative;">
+                        <div style="width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 3px; background: #4CAF50; margin-bottom: 1rem; border-radius: 2px;"></div>
+
+                <!-- Cash on Delivery -->
+                <div class="payment-option" data-method="cod" style="
+                    background: rgba(255,255,255,0.95);
+                    border-radius: 15px;
+                    padding: 1.5rem;
+                    margin-bottom: 2rem;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 2px solid transparent;
+                ">
+                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #fa709a, #fee140); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                        💵
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="color: #2d5016; margin-bottom: 0.3rem; font-size: 1.1rem;">Bayar di Tempat</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Bayar saat menerima PRETTEA Anda</p>
+                    </div>
+                    <div class="payment-radio" style="width: 20px; height: 20px; border: 2px solid #ddd; border-radius: 50%; position: relative;">
+                        <div style="width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 3px; background: #4CAF50; margin-bottom: 2rem; border-radius: 2px;"></div>
+
+                <!-- Security Note -->
+                <div style="display: flex; align-items: center; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 2rem;">
+                    <span style="margin-right: 0.5rem;">🔒</span>
+                    <span style="color: white; font-size: 0.9rem;">Semua transaksi aman dan terenkripsi</span>
+                </div>
+
+                <!-- Order Summary -->
+                <div style="background: rgba(255,255,255,0.95); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h3 style="color: #2d5016; margin-bottom: 1rem;">Order Summary</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Subtotal:</span>
+                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Delivery Fee:</span>
+                        <span>Rp ${deliveryFee.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <span>Tax (10%):</span>
+                        <span>Rp ${tax.toLocaleString('id-ID')}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; color: #2d5016; border-top: 1px solid #eee; padding-top: 1rem;">
+                        <span>Total:</span>
+                        <span>Rp ${total.toLocaleString('id-ID')}</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 1rem; padding-bottom: 1rem;">
+                    <button onclick="closeModal(this)" style="
+                        flex: 1;
+                        background: rgba(255,255,255,0.3);
+                        color: white;
+                        border: 2px solid white;
+                        padding: 1rem;
+                        border-radius: 15px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        ← Back
+                    </button>
+                    <button id="confirmPaymentBtn" onclick="processPayment()" style="
+                        flex: 2;
+                        background: linear-gradient(135deg, #4CAF50, #45a049);
+                        color: white;
+                        border: none;
+                        padding: 1rem;
+                        border-radius: 15px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        opacity: 0.5;
+                    " disabled>
+                        Confirm Payment →
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.className = 'modal-overlay';
+    document.body.appendChild(modal);
+
+    // Tambahkan function untuk close modal
+    window.closeModal = function(element) {
+        const modal = element.closest('.modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+    };
+
+    // Payment option selection functionality tetap sama
+    const paymentOptions = modal.querySelectorAll('.payment-option');
+    const confirmBtn = modal.querySelector('#confirmPaymentBtn');
+    let selectedMethod = null;
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            paymentOptions.forEach(opt => {
+                opt.style.border = '2px solid transparent';
+                opt.style.background = 'rgba(255,255,255,0.95)';
+                const radio = opt.querySelector('.payment-radio div');
+                radio.style.opacity = '0';
+            });
+
+            this.style.border = '2px solid #4CAF50';
+            this.style.background = 'rgba(255,255,255,1)';
+            const radio = this.querySelector('.payment-radio div');
+            radio.style.opacity = '1';
+
+            selectedMethod = this.dataset.method;
+            confirmBtn.disabled = false;
+            confirmBtn.style.opacity = '1';
+        });
+
+        option.addEventListener('mouseenter', function() {
+            if (!this.style.border.includes('#4CAF50')) {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+            }
+        });
+
+        option.addEventListener('mouseleave', function() {
+            if (!this.style.border.includes('#4CAF50')) {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            }
+        });
+    });
+
+    window.processPayment = function() {
+        if (!selectedMethod) return;
+
+        const order = {
+            id: 'ORD' + Date.now(),
+            items: [...cart],
+            subtotal: subtotal,
+            deliveryFee: deliveryFee,
+            tax: tax,
+            total: total,
+            paymentMethod: selectedMethod,
+            status: 'processing',
+            date: new Date().toLocaleDateString('id-ID'),
+            time: new Date().toLocaleTimeString('id-ID')
+        };
+
+        orders.unshift(order);
+        localStorage.setItem('prettea_orders', JSON.stringify(orders));
+
+        modal.remove();
+        showCheckoutConfirmation(order);
+
+        cart = [];
+        saveCart();
+        updateCartBadge();
+    };
+}
+function showCheckoutConfirmation(order) {
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+    `;
+
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            position: relative;
+        ">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+            <h2 style="color: #2d5016; margin-bottom: 1rem;">Order Confirmed!</h2>
+            <p style="color: #666; margin-bottom: 2rem;">Your order #${order.id} has been placed successfully!</p>
+            
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                <h3 style="color: #2d5016; margin-bottom: 1rem;">📞 Contact & Payment</h3>
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>📱 WhatsApp:</strong><br>
+                    <a href="https://wa.me/6281283481413" style="color: #25D366; text-decoration: none; font-weight: bold;">
+                        +62 812-8348-1413
+                    </a>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="window.open('https://wa.me/6281283481413?text=Hi PRETTEA! I want to confirm my order ${order.id} with ${getPaymentMethodText(order.paymentMethod)} payment', '_blank')" 
+                        style="background: #25D366; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    💬 Chat WhatsApp
+                </button>
+                <button onclick="closeConfirmationModal(this)" 
+                        style="background: #7cb342; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    📋 View Orders
+                </button>
+            </div>
+            
+            <button onclick="closeConfirmationModal(this)" 
+                    style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.1); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;">
+                ×
+            </button>
+        </div>
+    `;
+
+    modal.className = 'modal-overlay';
+    document.body.appendChild(modal);
+    
+    // TAMBAHKAN INI - Disable scroll
+    document.body.style.overflow = 'hidden';
+
+    // TAMBAHKAN FUNCTION INI
+    window.closeConfirmationModal = function(element) {
+        const modal = element.closest('.modal-overlay');
+        if (modal) {
+            modal.remove();
+            // Kembalikan scroll normal
+            document.body.style.overflow = 'auto';
+            showPage('orders');
+        }
+    };
+
+    // Auto close setelah 10 detik
+    setTimeout(() => {
+        if (document.querySelector('.modal-overlay')) {
+            modal.remove();
+            // TAMBAHKAN INI - Kembalikan scroll normal
+            document.body.style.overflow = 'auto';
+            showPage('orders');
+        }
+    }, 10000);
+}
+        function loadOrders() {
+            const ordersList = document.getElementById('ordersList');
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">📋</div>
+                        <h3>No orders yet</h3>
+                        <p>Your order history will appear here</p>
+                        <button class="cta-btn primary" onclick="showPage('menu')" style="margin-top: 2rem;">
+                            🛍️ Start Shopping
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            ordersList.innerHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <div class="order-id">Order #${order.id}</div>
+                            <div style="color: #666; font-size: 0.9rem;">${order.date} • ${order.time}</div>
+                            <div style="color: #7cb342; font-size: 0.9rem; margin-top: 0.3rem;">
+                                ${order.paymentMethod ? getPaymentMethodText(order.paymentMethod) : '💳 Kartu Kredit/Debit'}
+                            </div>
+                        </div>
+                        <div class="order-status ${getStatusClass(order.status)}">
+                            ${getStatusText(order.status)}
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        ${order.items.map(item => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div>
+                                    <span style="font-weight: bold;">${item.name}</span>
+                                    <span style="color: #666; font-size: 0.9rem;"> × ${item.quantity} (${getSugarText(item.sugar)})</span>
+                                </div>
+                                <div style="font-weight: bold; color: #7cb342;">
+                                    Rp ${(item.price * item.quantity).toLocaleString('id-ID')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="text-align: right; padding-top: 1rem; border-top: 1px solid #eee;">
+                        <div style="font-size: 1.1rem; font-weight: bold; color: #2d5016;">
+                            Total: Rp ${order.total.toLocaleString('id-ID')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getPaymentMethodText(method) {
+            switch(method) {
+                case 'card': return '💳 Kartu Kredit/Debit';
+                case 'transfer': return '🏦 Transfer Bank';
+                case 'ewallet': return '📱 E-Wallet';
+                case 'cod': return '💵 Bayar di Tempat';
+                default: return '💳 Kartu Kredit/Debit';
+            }
+        }
+
+        function getSugarText(sugar) {
+            switch(sugar) {
+                case 'normal': return 'Normal Sugar';
+                case 'less': return 'Less Sugar';
+                case 'extra': return 'Extra Sugar';
+                default: return 'Normal Sugar';
+            }
+        }
+
+        function getStatusClass(status) {
+            switch(status) {
+                case 'completed': return 'status-completed';
+                case 'processing': return 'status-processing';
+                case 'cancelled': return 'status-cancelled';
+                default: return 'status-processing';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'completed': return '✅ Completed';
+                case 'processing': return '⏳ Processing';
+                case 'cancelled': return '❌ Cancelled';
+                default: return '⏳ Processing';
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('prettea_cart', JSON.stringify(cart));
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #7cb342, #5a9216);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 9999;
+                font-weight: bold;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = '⏳ Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                showNotification('Message sent successfully! We\'ll get back to you soon. 📧');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartBadge();
+            loadHomeMenu();
+            
+            if (orders.length === 0) {
+                orders = [
+                    {
+                        id: 'ORD1704000001',
+                        items: [
+                            { name: 'Midnight Berry Tea', quantity: 2, price: 27000, sugar: 'normal' },
+                            { name: 'Butterfly Peach Tea', quantity: 1, price: 25000, sugar: 'less' }
+                        ],
+                        subtotal: 79000,
+                        deliveryFee: 5000,
+                        tax: 8400,
+                        total: 92400,
+                        paymentMethod: 'ewallet',
+                        status: 'completed',
+                        date: '25/05/2025',
+                        time: '14:30'
+                    }
+                ];
+                localStorage.setItem('prettea_orders', JSON.stringify(orders));
+            }
+        });
+    </script>
+</body>
+</html>
